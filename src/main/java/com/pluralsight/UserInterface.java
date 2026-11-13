@@ -1,27 +1,49 @@
 package com.pluralsight;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UserInterface {
+    public static void main(String[] args) {
+        //Create new user interface to run
+        UserInterface userInterface = new UserInterface();
+
+        //Call display method to run the user interface
+        userInterface.display();
+    }
 
     Dealership dealership;
 
     public UserInterface() {
-        init();
+
     }
 
     public void display() {
+        //Initialize the start of display
         init();
 
         Scanner input = new Scanner(System.in);
 
+        //Add boolean (appRunning) = true
+        //While loop to keep the interface menu running until close
         boolean appRunning = true;
         while (appRunning) {
-            System.out.println("1. Display All Vehicles");
-            System.out.println("2. Get Vehicles By Color");
-            System.out.println("Exit");
+            System.out.println("Welcome to the Dealership");
+            System.out.println("""
+                    Which Option Would You Like To Choose
+                    1. Show All Cars
+                    2. Search By Price
+                    3. Search by Make/Model
+                    4. Search by Year
+                    5. Search by Color
+                    6. Search by Mileage
+                    7. Search by Type
+                    8. Search by All Vehicles
+                    9. Add Vehicle
+                    10.Remove Vehicle
+                    11.Exit""");
 
             System.out.println("Enter your choice");
             int choice = input.nextInt();
@@ -30,22 +52,35 @@ public class UserInterface {
                     processGetAllVehicleRequest();
                     break;
                 case 2:
-                    processByGetPrice();
+                    processByGetPriceRequest();
                     break;
                 case 3:
-                    processByGetMakeAndModel();
+                    processByGetMakeAndModelRequest();
                     break;
                 case 4:
-                    processByGetYear();
+                    processByGetYearRequest();
+                    break;
                 case 5:
                     processGetColorRequest();
+                    break;
                 case 6:
-                    System.out.println("Exit");
+                    processGetByMileageRequest();
+                    break;
                 case 7:
-                    System.out.println("Exit");
+                    processGetByVehicleTypeRequest();
+                    break;
                 case 8:
+                    processGetAllVehicleRequest();
+                    break;
+                case 9:
+                    processAddVehicleRequest();
+                    break;
+                case 10:
+                    processRemoveVehicleRequest();
+                    break;
+                case 11:
+                    System.out.println("Exiting...");
                     appRunning = false;
-                    System.out.println("Goodbye!");
                     break;
                 default:
                     System.out.println("Invalid choice");
@@ -62,6 +97,7 @@ public class UserInterface {
     }
 
     private void displayVehicles(ArrayList<Vehicle> vehicles) {
+        //Create for loop to list all the vehicles in the inventory
         for (Vehicle vehicle : vehicles) {
             System.out.println(vehicle.toString());
         }
@@ -74,13 +110,14 @@ public class UserInterface {
 
     public void processGetColorRequest() {
         //ask user the colors
-
-        String color = "blue";
+        Scanner input = new Scanner(System.in);
+        System.out.println("Please enter your color");
+        String color = input.nextLine();
 
         displayVehicles(dealership.getVehiclesByColor(color));
     }
 
-    public void processByGetPrice() {
+    public void processByGetPriceRequest() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Enter minimum price: ");
@@ -92,7 +129,7 @@ public class UserInterface {
         displayVehicles(dealership.getAllVehiclesByPrice(min, max));
     }
 
-    public void processByGetMakeAndModel() {
+    public void processByGetMakeAndModelRequest() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter Make : ");
         String make = scanner.next();
@@ -103,11 +140,109 @@ public class UserInterface {
 
     }
 
-    public void processByGetYear() {
+    public void processByGetYearRequest() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter Year : ");
-        int year = scanner.nextInt();
+        System.out.print("Enter Min Year : ");
+        int min = scanner.nextInt();
+        System.out.print("Enter Max Year : ");
+        int max = scanner.nextInt();
 
-        displayVehicles(dealership.getVehiclesByYear(1980,2026));
+        displayVehicles(dealership.getVehiclesByYear(min, max));
+    }
+
+    public void processGetByMileageRequest() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter Minimum Mileage : ");
+        BigDecimal min = scanner.nextBigDecimal();
+        System.out.print("Enter Maximum Mileage : ");
+        BigDecimal max = scanner.nextBigDecimal();
+
+        displayVehicles(dealership.getVehiclesByMileage(min, max));
+    }
+
+    public void processGetByVehicleTypeRequest() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter Type : ");
+        String type = scanner.next();
+
+        displayVehicles(dealership.getVehiclesByType(type));
+    }
+
+    public void processAddVehicleRequest() {
+        Scanner scanner = new Scanner(System.in);
+
+        //User will input all information for the new car input
+        System.out.print("Enter VIN: ");
+        int vin = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.print("Enter year: ");
+        int year = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.print("Enter make: ");
+        String make = scanner.nextLine();
+
+        System.out.print("Enter model: ");
+        String model = scanner.nextLine();
+
+        System.out.print("Enter vehicle type: ");
+        String vehicleType = scanner.nextLine();
+
+        System.out.print("Enter color: ");
+        String color = scanner.nextLine();
+
+        System.out.print("Enter odometer: ");
+        int odometer = scanner.nextInt();
+
+        System.out.print("Enter price: ");
+        BigDecimal price = scanner.nextBigDecimal();
+
+        //Initializing new vehicle
+        Vehicle vehicle = new Vehicle(vin, year, make, model,
+                vehicleType, color, odometer, price);
+
+        //Add new vehicle to the inventory
+        dealership.addVehicle(vehicle);
+
+        //Save the updated dealership to the file
+        DealershipFileManager dealershipFileManager = new DealershipFileManager();
+        dealershipFileManager.saveDealership(dealership);
+
+        //Thank you message
+        System.out.println("Vehicle successfully added!");
+
+    }
+
+    public void processRemoveVehicleRequest() {
+        Scanner scanner = new Scanner(System.in);
+
+        //Prompt user to enter Vin
+        System.out.print("Enter VIN: ");
+        int vin = scanner.nextInt();
+
+        //Variable for removed vehicle
+        Vehicle vehicleRemoved = null;
+
+        //Add for loop to check if the user input vin matches the vin on file
+        for (Vehicle vehicle : dealership.getAllVehicles()) {
+            if (vehicle.getVin() == vin) {
+                vehicleRemoved = vehicle;
+                break;
+            }
+        }
+
+        //If the vehicleRemoved input isnt blank
+        if (vehicleRemoved != null) {
+            dealership.removeVehicle(vehicleRemoved);
+
+            DealershipFileManager fileManager = new DealershipFileManager();
+            fileManager.saveDealership(dealership);
+
+            System.out.println("Vehicle successfully removed!");
+        } else {
+            System.out.println("Vehicle not found!");
+        }
+
     }
 }

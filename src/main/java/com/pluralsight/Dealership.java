@@ -19,6 +19,30 @@ public class Dealership {
         this.inventory = new ArrayList<>();
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public void addVehicle(Vehicle vehicle) {
         this.inventory.add(vehicle);
     }
@@ -88,9 +112,15 @@ public class Dealership {
         //Start a new list for the filtered cars
         ArrayList<Vehicle> vehicles = new ArrayList<>();
 
+        for(Vehicle vehicle : this.inventory){
+            if (vehicle.getColor().equals(color)){
+                vehicles.add(vehicle);
+            }
+        }
+
         //return the list
         //will not return null until finished
-        return null;
+        return vehicles;
     }
 
     public ArrayList<Vehicle>getVehiclesByMileage(BigDecimal min,  BigDecimal max){
@@ -99,20 +129,36 @@ public class Dealership {
         //Start a new list for the filtered cars
         ArrayList<Vehicle> vehicles = new ArrayList<>();
 
+        for(Vehicle vehicle : this.inventory){
+           //Add .valueOf() to get the value of the odometer
+            BigDecimal mileage = BigDecimal.valueOf(vehicle.getOdometer());
+
+            if (mileage.compareTo(min) >= 0 && mileage.compareTo(max) <= 0){
+                vehicles.add(vehicle);
+            }
+        }
+
         //return the list
         //will not return null until finished
-        return null;
+        return vehicles;
     }
 
-    public ArrayList<Vehicle>getVehiclesByType(Vehicle type){
+    public ArrayList<Vehicle>getVehiclesByType(String type){
         //loop over inventory and return a list of vehicles that match the type
 
         //Start a new list for the filtered cars
         ArrayList<Vehicle> vehicles = new ArrayList<>();
 
+        //add for loop
+        for (Vehicle vehicle : this.inventory){
+            if (vehicle.getVehicleType().equalsIgnoreCase(type)){
+                vehicles.add(vehicle);
+            }
+        }
+
         //return the list
         //will not return null until finished
-        return null;
+        return vehicles;
     }
 
 
