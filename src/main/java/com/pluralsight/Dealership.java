@@ -53,9 +53,15 @@ public class Dealership {
         //Start a new list for the filtered cars
         ArrayList<Vehicle> vehicles = new ArrayList<>();
 
+        for(Vehicle vehicle : this.inventory){
+            if (vehicle.getMake().equals(make) && vehicle.getModel().equals(model)){
+                vehicles.add(vehicle);
+            }
+        }
+
         //return the list
         //will not return null until finished
-        return null;
+        return vehicles;
     }
 
     public ArrayList<Vehicle>getVehiclesByYear(int min , int max){
@@ -64,9 +70,15 @@ public class Dealership {
         //Start a new list for the filtered cars
         ArrayList<Vehicle> vehicles = new ArrayList<>();
 
+        for(Vehicle vehicle : this.inventory){
+            if (vehicle.getYear() >= min && vehicle.getYear() <= max){
+                vehicles.add(vehicle);
+            }
+        }
+
         //return the list
         //will not return null until finished
-        return null;
+        return vehicles;
 
     }
 

@@ -30,15 +30,15 @@ public class UserInterface {
                     processGetAllVehicleRequest();
                     break;
                 case 2:
-                    processGetColorRequest();
-                    break;
-                case 3:
                     processByGetPrice();
                     break;
+                case 3:
+                    processByGetMakeAndModel();
+                    break;
                 case 4:
-                    System.out.println("Exit");
+                    processByGetYear();
                 case 5:
-                    System.out.println("Exit");
+                    processGetColorRequest();
                 case 6:
                     System.out.println("Exit");
                 case 7:
@@ -90,5 +90,24 @@ public class UserInterface {
         BigDecimal max = scanner.nextBigDecimal();
 
         displayVehicles(dealership.getAllVehiclesByPrice(min, max));
+    }
+
+    public void processByGetMakeAndModel() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter Make : ");
+        String make = scanner.next();
+        System.out.print("Enter Model : ");
+        String model = scanner.next();
+
+        displayVehicles(dealership.getVehiclesByMakeAndModel(make, model));
+
+    }
+
+    public void processByGetYear() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter Year : ");
+        int year = scanner.nextInt();
+
+        displayVehicles(dealership.getVehiclesByYear(1980,2026));
     }
 }
