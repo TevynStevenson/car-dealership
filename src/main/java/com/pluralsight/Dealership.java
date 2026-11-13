@@ -37,8 +37,14 @@ public class Dealership {
         //Start a new list for the filtered cars
         ArrayList<Vehicle> vehicles = new ArrayList<>();
 
+        for (Vehicle vehicle : this.inventory) {
+            if (vehicle.getPrice().compareTo(min) >= 0 && vehicle.getPrice().compareTo(max) <= 0){
+                vehicles.add(vehicle);
+            }
+        }
+
         //return the list
-        return null;
+        return vehicles;
     }
 
     public ArrayList<Vehicle>getVehiclesByMakeAndModel(String make, String model){
