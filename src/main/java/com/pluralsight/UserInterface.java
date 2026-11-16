@@ -33,52 +33,48 @@ public class UserInterface {
             System.out.println("Welcome to the Dealership");
             System.out.println("""
                     Which Option Would You Like To Choose
-                    1. Show All Cars
-                    2. Search By Price
-                    3. Search by Make/Model
-                    4. Search by Year
-                    5. Search by Color
-                    6. Search by Mileage
-                    7. Search by Type
-                    8. Search by All Vehicles
-                    9. Add Vehicle
-                    10.Remove Vehicle
-                    11.Exit""");
+                    1. Search By Price
+                    2. Search by Make/Model
+                    3. Search by Year
+                    4. Search by Color
+                    5. Search by Mileage
+                    6. Search by Type
+                    7. Search by All Vehicles
+                    8. Add Vehicle
+                    9.Remove Vehicle
+                    99.Exit""");
 
             System.out.println("Enter your choice");
             int choice = input.nextInt();
             switch (choice) {
                 case 1:
-                    processGetAllVehicleRequest();
-                    break;
-                case 2:
                     processByGetPriceRequest();
                     break;
-                case 3:
+                case 2:
                     processByGetMakeAndModelRequest();
                     break;
-                case 4:
+                case 3:
                     processByGetYearRequest();
                     break;
-                case 5:
+                case 4:
                     processGetColorRequest();
                     break;
-                case 6:
+                case 5:
                     processGetByMileageRequest();
                     break;
-                case 7:
+                case 6:
                     processGetByVehicleTypeRequest();
                     break;
-                case 8:
+                case 7:
                     processGetAllVehicleRequest();
                     break;
-                case 9:
+                case 8:
                     processAddVehicleRequest();
                     break;
-                case 10:
+                case 9:
                     processRemoveVehicleRequest();
                     break;
-                case 11:
+                case 99:
                     System.out.println("Exiting...");
                     appRunning = false;
                     break;
