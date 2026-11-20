@@ -241,4 +241,9 @@ public class UserInterface {
         }
 
     }
+
+    public void processContractRequest() {
+        Scanner scanner = new Scanner(System.in);
+
+    }
 }
