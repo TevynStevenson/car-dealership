@@ -253,7 +253,7 @@ public class UserInterface {
         String contract = scanner.nextLine();
 
         if (contract.equalsIgnoreCase("Yes")) {
-            System.out.println("Entering Contracts Screen");
+            System.out.println("Entering Contracts Screen \n");
             processContractRequest();
         } else if (contract .equalsIgnoreCase("No")) {
             System.out.println("Must be under contract \n");
@@ -268,6 +268,7 @@ public class UserInterface {
 
         //Prompt user to enter whether this is a salesContract or LeaseContract
         System.out.println("Which type of contract are you under? (Sales/Lease)");
+        System.out.println("May not lease vehicle over 3 years old");
         String contract = scanner.nextLine();
 
         if (contract.equals("Sales")) {

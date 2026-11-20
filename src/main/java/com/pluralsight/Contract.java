@@ -64,8 +64,6 @@ public class Contract {
     }
 
     public Double getTotalPrice() {
-
-
         return totalPrice;
     }
 
