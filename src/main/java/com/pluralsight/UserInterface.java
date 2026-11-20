@@ -42,6 +42,7 @@ public class UserInterface {
                     7. Search by All Vehicles
                     8. Add Vehicle
                     9.Remove Vehicle
+                    10.Sell/Lease Vehicle
                     99.Exit""");
 
             System.out.println("Enter your choice");
@@ -73,6 +74,9 @@ public class UserInterface {
                     break;
                 case 9:
                     processRemoveVehicleRequest();
+                    break;
+                case 10:
+                    processSaleLeaseRequest();
                     break;
                 case 99:
                     System.out.println("Exiting...");
@@ -242,8 +246,104 @@ public class UserInterface {
 
     }
 
-    public void processContractRequest() {
+    public void processSaleLeaseRequest() {
         Scanner scanner = new Scanner(System.in);
 
+        System.out.print("Are you under contract? (Yes/No) ");
+        String contract = scanner.nextLine();
+
+        if (contract.equalsIgnoreCase("Yes")) {
+            System.out.println("Entering Contracts Screen");
+            processContractRequest();
+        } else if (contract .equalsIgnoreCase("No")) {
+            System.out.println("Must be under contract \n");
+            display();
+            scanner.close();
+        }
+    }
+
+    public void processContractRequest() {
+        //Input scanner
+        Scanner scanner = new Scanner(System.in);
+
+        //Prompt user to enter whether this is a salesContract or LeaseContract
+        System.out.println("Which type of contract are you under? (Sales/Lease)");
+        String contract = scanner.nextLine();
+
+        if (contract.equals("Sales")) {
+            processSalesContractRequest();
+            //Add else if statement for lease contract
+        } else if (contract.equals("Lease")) {
+            processLeaseContractRequest();
+        }
+    }
+
+    public void processSalesContractRequest() {
+        Scanner scanner = new Scanner(System.in);
+
+        //Prompt user to enter the date of their contract
+        System.out.println("Enter the date of your current contract");
+        String contractDate = scanner.nextLine();
+
+        //Prompt user to enter their name
+        System.out.print("Enter customer name: ");
+        String customerName = scanner.nextLine();
+
+        //Prompt user to enter their email
+        System.out.println("Enter customer email: ");
+        String customerEmail = scanner.nextLine();
+
+        //Prompt user to enter the vehicle sold
+        System.out.println("Enter vehicle sold: ");
+        String vehicleSold = scanner.nextLine();
+
+        //Retrieve total price
+        System.out.println("Enter price of vehicle sold: ");
+        Double price = scanner.nextDouble();
+
+        for (Vehicle vehicle : dealership.getAllVehicles()) {
+            if (price.equals(vehicle.getPrice())) {
+                System.out.println(price);
+            } else {
+                System.out.println("Re-enter price of vehicle sold");
+            }
+
+        }
+
+        Contract contract = new Contract (contractDate,customerName,customerEmail,vehicleSold,price,0.0);
+
+    }
+
+    public void processLeaseContractRequest() {
+        Scanner scanner = new Scanner(System.in);
+
+        //Prompt user to enter the date of their contract
+        System.out.println("Enter the date of your current contract");
+        String contractDate = scanner.nextLine();
+
+        //Prompt user to enter their name
+        System.out.print("Enter customer name: ");
+        String customerName = scanner.nextLine();
+
+        //Prompt user to enter their email
+        System.out.println("Enter customer email: ");
+        String customerEmail = scanner.nextLine();
+
+        //Prompt user to enter the vehicle sold
+        System.out.println("Enter vehicle sold: ");
+        String vehicleSold = scanner.nextLine();
+
+        //Retrieve total price
+        System.out.println("Enter price of vehicle sold: ");
+        BigDecimal price = scanner.nextBigDecimal();
+
+        for (Vehicle vehicle : dealership.getAllVehicles()) {
+            if (price.equals(vehicle.getPrice())) {
+                System.out.println(price);
+            } else {
+                System.out.println("Re-enter price of vehicle sold");
+            }
+
+        }
     }
 }

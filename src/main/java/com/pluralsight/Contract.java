@@ -62,4 +62,14 @@ public class Contract {
     public void setVehicleSold(String vehicleSold) {
         this.vehicleSold = vehicleSold;
     }
+
+    public Double getTotalPrice() {
+
+
+        return totalPrice;
+    }
+
+    public Double  getMonthlyPayment() {
+        return monthlyPayment;
+    }
 }
